@@ -1,6 +1,7 @@
+@OptIn(ExperimentalStdlibApi::class)
 fun main(args: Array<String>) {
 
-    val values = 1..100;
+    val values = 1..<100;
 
     val fizzBuzz = FizzBuzz()
 
