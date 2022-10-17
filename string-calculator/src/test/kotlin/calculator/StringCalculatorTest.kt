@@ -24,25 +24,17 @@ internal class StringCalculatorTest {
         }
     }
 
-    @UnitTest
-    fun `given a single number 1 should return 1`() {
-        val result = calculator.calculate("1")
+    @ParameterizedTest
+    fun `given a single number should return its value`() = listOf(
+        "1" to 1,
+        "2" to 2,
+        "12" to 12
+    ).map { (input, excepted) ->
+        DynamicTest.dynamicTest("given $input should return $excepted") {
+            val result = calculator.calculate(input)
 
-        result shouldBeEqualTo 1
-    }
-
-    @UnitTest
-    fun `given a single number 2 should return 2`() {
-        val result = calculator.calculate("2")
-
-        result shouldBeEqualTo 2
-    }
-
-    @UnitTest
-    fun `given a double digit number 12 should return 12`() {
-        val result = calculator.calculate("12")
-
-        result shouldBeEqualTo 12
+            result shouldBeEqualTo excepted
+        }
     }
 
     @UnitTest
