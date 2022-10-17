@@ -10,9 +10,11 @@ class StringCalculator {
         val numbers = input.split(",")
 
         if (numbers.size == 1) {
-            return numbers[0].toInt()
+            return parseInput(numbers[0])
         }
 
-        return numbers[0].toInt() + numbers[1].toInt()
+        return numbers.sumOf { parseInput(it) }
     }
+
+    private fun parseInput(number : String) = number.toInt()
 }

@@ -25,6 +25,32 @@ internal class StringCalculatorTest {
     }
 
     @ParameterizedTest
+    fun `given three numbers seperated by comma should return their sum`() = listOf(
+        "1,1,1" to 3,
+        "2,2,2" to 6,
+        "1,2,3" to 6
+    ).map { (input, excepted) ->
+        DynamicTest.dynamicTest("given $input should return $excepted") {
+            val result = calculator.calculate(input)
+
+            result shouldBeEqualTo excepted
+        }
+    }
+
+    @ParameterizedTest
+    fun `given four numbers seperated by comma should return their sum`() = listOf(
+        "1,1,1,1" to 4,
+        "2,2,2,2" to 8,
+        "1,2,3,4" to 10
+    ).map { (input, excepted) ->
+        DynamicTest.dynamicTest("given $input should return $excepted") {
+            val result = calculator.calculate(input)
+
+            result shouldBeEqualTo excepted
+        }
+    }
+
+    @ParameterizedTest
     fun `given a single number should return its value`() = listOf(
         "1" to 1,
         "2" to 2,
