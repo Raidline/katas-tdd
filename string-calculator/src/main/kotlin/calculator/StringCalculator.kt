@@ -11,10 +11,6 @@ class StringCalculator(private val aggregator: StringAggregator) {
 
         val numbers = aggregator.aggregate(input)
 
-        if (numbers.size == 1) {
-            return parseInput(numbers[0])
-        }
-
         return numbers.sumOf { parseInput(it) }
     }
 

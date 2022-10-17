@@ -39,40 +39,43 @@ internal class StringCalculatorTest {
 
     @ParameterizedTest
     fun `given three numbers seperated by comma should return their sum`() = listOf(
-        "1,1,1" to 3,
-        "2,2,2" to 6,
-        "1,2,3" to 6
-    ).map { (input, excepted) ->
-        DynamicTest.dynamicTest("given $input should return $excepted") {
+        "1,1,1" to ParameterizedArgument(3, listOf("1", "1", "1")),
+        "2,2,2" to ParameterizedArgument(6, listOf("2", "2", "2")),
+        "1,2,3" to ParameterizedArgument(6, listOf("1", "2", "3"))
+    ).map { (input, params) ->
+        DynamicTest.dynamicTest("given $input should return $params.excepted") {
+            every { aggregator.aggregate(input) } returns params.mockedNumbers
             val result = calculator.calculate(input)
 
-            result shouldBeEqualTo excepted
+            result shouldBeEqualTo params.expected
         }
     }
 
     @ParameterizedTest
     fun `given four numbers seperated by comma should return their sum`() = listOf(
-        "1,1,1,1" to 4,
-        "2,2,2,2" to 8,
-        "1,2,3,4" to 10
-    ).map { (input, excepted) ->
-        DynamicTest.dynamicTest("given $input should return $excepted") {
+        "1,1,1,1" to ParameterizedArgument(4, listOf("1", "1", "1", "1")),
+        "2,2,2,2" to ParameterizedArgument(8, listOf("2", "2", "2", "2")),
+        "1,2,3,4" to ParameterizedArgument(10, listOf("1", "2", "3", "4"))
+    ).map { (input, params) ->
+        DynamicTest.dynamicTest("given $input should return ${params.expected}") {
+            every { aggregator.aggregate(input) } returns params.mockedNumbers
             val result = calculator.calculate(input)
 
-            result shouldBeEqualTo excepted
+            result shouldBeEqualTo params.expected
         }
     }
 
     @ParameterizedTest
     fun `given a single number should return its value`() = listOf(
-        "1" to 1,
-        "2" to 2,
-        "12" to 12
-    ).map { (input, excepted) ->
-        DynamicTest.dynamicTest("given $input should return $excepted") {
+        "1" to ParameterizedArgument(1, listOf("1")),
+        "2" to ParameterizedArgument(2, listOf("2")),
+        "12" to ParameterizedArgument(12, listOf("12"))
+    ).map { (input, params) ->
+        DynamicTest.dynamicTest("given $input should return $params.excepted") {
+            every { aggregator.aggregate(input) } returns params.mockedNumbers
             val result = calculator.calculate(input)
 
-            result shouldBeEqualTo excepted
+            result shouldBeEqualTo params.expected
         }
     }
 
@@ -85,27 +88,29 @@ internal class StringCalculatorTest {
 
     @ParameterizedTest
     fun `given two numbers seperated by newline should return their sum`() = listOf(
-        "1\n2" to 3,
-        "4\n4" to 8
-    ).map { (input, expected) ->
-        DynamicTest.dynamicTest("given $input seperated by newline should return $expected") {
+        "1\n2" to ParameterizedArgument(3, listOf("1", "2")),
+        "4\n4" to ParameterizedArgument(8, listOf("4", "4"))
+    ).map { (input, params) ->
+        DynamicTest.dynamicTest("given $input seperated by newline should return $params.expected") {
+            every { aggregator.aggregate(input) } returns params.mockedNumbers
             val result = calculator.calculate(input)
 
-            result shouldBeEqualTo expected
+            result shouldBeEqualTo params.expected
         }
     }
 
     @ParameterizedTest
     fun `given three numbers seperated by newline and comma should return their sum`() = listOf(
-        "1\n2,3" to 6,
-        "4\n4,1" to 9,
-        "1,2\n3" to 6,
-        "2,2\n3" to 7
-    ).map { (input, expected) ->
-        DynamicTest.dynamicTest("given $input seperated by newline and comma should return $expected") {
+        "1\n2,3" to ParameterizedArgument(6, listOf("1", "2", "3")),
+        "4\n4,1" to ParameterizedArgument(9, listOf("4", "4", "1")),
+        "1,2\n3" to ParameterizedArgument(6, listOf("1", "2", "3")),
+        "2,2\n3" to ParameterizedArgument(7, listOf("2", "2", "3"))
+    ).map { (input, params) ->
+        DynamicTest.dynamicTest("given $input seperated by newline and comma should return $params.expected") {
+            every { aggregator.aggregate(input) } returns params.mockedNumbers
             val result = calculator.calculate(input)
 
-            result shouldBeEqualTo expected
+            result shouldBeEqualTo params.expected
         }
     }
 

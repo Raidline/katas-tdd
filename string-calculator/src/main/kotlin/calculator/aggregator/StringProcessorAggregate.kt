@@ -7,6 +7,11 @@ class StringProcessorAggregate(private val commaProcessor: StringInputProcessor,
                                private val newLineProcessor: StringNewLineInputProcessor) : StringAggregator {
 
     override fun aggregate(input: String): List<String> {
+
+        if (input.trim().length == 1) {
+            return listOf(input)
+        }
+
         val commaNumbers = mutableListOf<String>()
 
         if (commaProcessor.canHandle(input)) {
