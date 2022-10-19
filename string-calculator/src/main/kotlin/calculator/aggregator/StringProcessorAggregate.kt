@@ -22,6 +22,10 @@ class StringProcessorAggregate(private val commaProcessor: StringInputProcessor,
             return aggregateOnlyNewLine(input)
         }
 
+        if (input.contains("//")) {
+            return input.split('\n', ',', input[2]).filter { s -> s.toIntOrNull() != null }
+        }
+
         return aggregateCommaAndNewLine(commaNumbers)
     }
 

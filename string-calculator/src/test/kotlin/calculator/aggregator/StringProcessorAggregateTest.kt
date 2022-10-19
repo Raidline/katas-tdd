@@ -85,6 +85,20 @@ internal class StringProcessorAggregateTest {
     }
 
     @UnitTest
+    fun `given a new default delimiter when aggregating should return list containing values`() {
+        val input = "//;\n1;2"
+
+        every { commaInputProcessor.canHandle(input) } returns false
+        every { newLineInputProcessor.canHandle(any()) } returns false
+
+        val result = aggregator.aggregate(input)
+
+        result shouldHaveSize 2
+        result shouldBeEqualTo listOf("1","2")
+
+    }
+
+    @UnitTest
     fun `given single number should return list with number`() {
         val result = aggregator.aggregate("1")
 

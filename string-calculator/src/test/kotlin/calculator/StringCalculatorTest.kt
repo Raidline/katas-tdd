@@ -114,5 +114,20 @@ internal class StringCalculatorTest {
         }
     }
 
+    @ParameterizedTest
+    fun `given two numbers seperated by a delimiter and newline and comma should return their sum`() = listOf(
+        "//;\n5;2" to ParameterizedArgument(7, listOf("5", "2")),
+        "//;\n1;2" to ParameterizedArgument(3, listOf("1", "2")),
+        "//;\n1;3" to ParameterizedArgument(4, listOf("1", "3")),
+        "//;\n2;3" to ParameterizedArgument(5, listOf("2", "3"))
+    ).map { (input, params) ->
+        DynamicTest.dynamicTest("given $input seperated by newline and delimiter should return $params.expected") {
+            every { aggregator.aggregate(input) } returns params.mockedNumbers
+            val result = calculator.calculate(input)
+
+            result shouldBeEqualTo params.expected
+        }
+    }
+
     private data class ParameterizedArgument(val expected : Int, val mockedNumbers : List<String>)
 }
